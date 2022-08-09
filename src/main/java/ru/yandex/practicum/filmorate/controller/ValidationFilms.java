@@ -6,7 +6,7 @@ import ru.yandex.practicum.filmorate.model.ValidationException;
 import java.time.LocalDate;
 
 public class ValidationFilms {
-    private final LocalDate RELEASE_DATE = LocalDate.now();
+    private final LocalDate RELEASE_DATE = LocalDate.of(1895,12,28);
 
     public void validation(Film film) {
         if(film.getName()==null || film.getName().trim().equals("")) {
