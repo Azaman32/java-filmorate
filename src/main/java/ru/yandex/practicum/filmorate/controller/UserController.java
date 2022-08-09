@@ -9,6 +9,7 @@ import java.util.Map;
 
 @RestController
 public class UserController {
+    ValidationUser validationUser = new ValidationUser();
     private int key = 1;
     private final Map<Integer, User> users = new HashMap<>();
 
@@ -19,6 +20,7 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user) {
+        validationUser.validation(user);
         users.put(key, user);
         key = key + 1;
         return user;
@@ -26,12 +28,12 @@ public class UserController {
 
     @PutMapping
     public User update(@RequestBody User user) {
+        validationUser.validation(user);
         for (User user1 : users.values()) {
             if (!user1.equals(user)) {
                 users.put(key, user);
                 key += 1;
             }
-
         }
         return user;
     }
