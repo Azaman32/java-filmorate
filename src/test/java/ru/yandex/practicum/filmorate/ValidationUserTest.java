@@ -42,7 +42,7 @@ public class ValidationUserTest {
     @Test()
     public void incorrectBirthday() {
         User user = new User(1,"email@.ru","login","name",
-                LocalDate.of(2100, 1, 1));
+                LocalDate.of(2446,8,20));
         assertThrows(ValidationException.class,() ->validationUsers.validation(user));
     }
 

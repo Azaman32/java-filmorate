@@ -18,11 +18,12 @@ public class ValidationUsers {
         }else if(user.getLogin()==null || user.getLogin().equals("") || user.getLogin().contains(" ")) {
             log.info("Ошибка при вводе Login");
             throw new ValidationException();
-        } else if (user.getName() == null || user.getName().equals("")) {
-            user.setName(user.getLogin());
         }else if(todayDate.isBefore(user.getBirthday())) {
             log.info("Ошибка при вводе Birthday");
             throw new ValidationException();
+        }
+        if (user.getName() == null || user.getName().equals("")) {
+        user.setName(user.getLogin());
         }
     }
 }
