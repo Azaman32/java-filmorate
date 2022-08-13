@@ -8,17 +8,18 @@ import ru.yandex.practicum.filmorate.model.ValidationException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class UserController {
-    ValidationUsers validationUsers = new ValidationUsers();
+    UserValidator validationUsers = new UserValidator();
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private int key = 1;
     private final Map<Integer, User> users = new HashMap<>();
 
     @GetMapping("/users")
-    public ArrayList<User> findAll() {
+    public List<User> findAll() {
         log.info("Выполнен запрос Get");
         return new ArrayList<>(users.values());
     }
@@ -36,7 +37,7 @@ public class UserController {
     @PutMapping("/users")
     public User update(@RequestBody User user) {
         if(user.getId() <=0) {
-            throw new ValidationException();
+            throw new ValidationException("Invalid id");
         }
         validationUsers.validation(user);
         for (User user1 : users.values()) {
