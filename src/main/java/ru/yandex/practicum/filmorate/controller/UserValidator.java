@@ -8,9 +8,10 @@ import java.time.LocalDate;
 
 @Slf4j
 public class UserValidator {
-    private LocalDate todayDate = LocalDate.now();
+    private LocalDate todayDate;
 
     public void validation(User user) {
+        todayDate = LocalDate.now();
         if (user.getEmail() == null || user.getEmail().trim().equals("") || !user.getEmail().contains("@")) {
             log.error("Invalid email: {}", user.getEmail());
             throw new ValidationException("Invalid email: {}");

@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 public class FilmController {
     private FilmValidator validationFilms = new FilmValidator();
-    Identifier identifier = new Identifier();
+    private FilmIdGenerator filmIdGenerator = new FilmIdGenerator();
     private final Map<Integer, Film> films = new HashMap<>();
 
     @GetMapping("/films")
@@ -26,7 +26,7 @@ public class FilmController {
     @PostMapping("/films")
     public Film create(@RequestBody Film film) {
         validationFilms.validation(film);
-        film.setId(identifier.getId());
+        film.setId(filmIdGenerator.generate());
         films.put(film.getId(), film);
         log.info("POST /films: создан фильм с id {}", film.getId());
         return film;
@@ -40,7 +40,7 @@ public class FilmController {
         }
         for (Film variableFilm : films.values()) {
             if (variableFilm.getId() != film.getId()) {
-                film.setId(identifier.getId());
+                film.setId(filmIdGenerator.generate());
                 films.put(film.getId(), film);
                 log.info("Put /films: создан фильм с id {}", film.getId());
             }
