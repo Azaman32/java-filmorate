@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -8,12 +9,12 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 
 @Slf4j
+@Component
 public class FilmValidator {
     static final LocalDate RELEASE_DATE = LocalDate.of(1895, 12, 28);
-
     public void validation(Film film) {
         if (film.getId() < 0) {
-            throw new UserNotFoundException("Invalid id");
+            throw new UserNotFoundException("User id should be positive");
         }
         if (film.getName() == null || film.getName().trim().equals("")) {
             log.error("Invalid user: {}", film.getName());

@@ -12,11 +12,12 @@ import java.util.List;
 @Slf4j
 public class UserController {
     private final UserService userService;
-    private final UserValidator userValidator = new UserValidator();
+    private final UserValidator userValidator;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,UserValidator userValidator) {
         this.userService = userService;
+        this.userValidator = userValidator;
     }
 
     @GetMapping("/users")
@@ -63,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}/friends/{friendId}")
-    public void deleteFriend(@PathVariable("id") int id, @PathVariable("friendId") int friendId) {
-        userService.deleteFriend(id, friendId);
+    public void deleteFriend(@PathVariable("id") int currentUserId, @PathVariable("friendId") int friendId) {
+        userService.deleteFriend(currentUserId, friendId);
     }
 }

@@ -13,11 +13,12 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserStorage userStorage;
-    private final UserIdGenerator userIdGenerator = new UserIdGenerator();
+    private final UserIdGenerator userIdGenerator;
 
     @Autowired
-    public UserService(UserStorage inMemoryUserStorage) {
+    public UserService(UserStorage inMemoryUserStorage,UserIdGenerator userIdGenerator) {
         this.userStorage = inMemoryUserStorage;
+        this.userIdGenerator = userIdGenerator;
     }
 
     public void addFriend(int userId, int userFriendId) {

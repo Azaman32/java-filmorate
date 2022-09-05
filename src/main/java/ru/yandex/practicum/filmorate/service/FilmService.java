@@ -15,12 +15,13 @@ import java.util.List;
 public class FilmService {
     private final FilmStorage filmStorage;
     private final UserService userService;
-    private final FilmIdGenerator filmIdGenerator = new FilmIdGenerator();
+    private final FilmIdGenerator filmIdGenerator;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage, UserService userService) {
+    public FilmService(FilmStorage filmStorage, UserService userService,FilmIdGenerator filmIdGenerator) {
         this.filmStorage = filmStorage;
         this.userService = userService;
+        this.filmIdGenerator = filmIdGenerator;
     }
 
     public List<Film> getAllFilm() {
@@ -28,7 +29,6 @@ public class FilmService {
     }
 
     public Film getFilm(int filmId) {
-        filmExist(filmId);
         return filmStorage.get(filmId);
     }
 
@@ -39,19 +39,15 @@ public class FilmService {
     }
 
     public void addLike(int filmId, int userId) {
-        filmExist(filmId);
-        userService.userExist(userId);
         filmStorage.get(filmId).setLike(userId);
     }
 
     public void deleteLike(int filmId, int userId) {
-        filmExist(filmId);
         userService.userExist(userId);
         filmStorage.get(filmId).getLike().remove(userId);
     }
 
     public void updateFilm(Film film) {
-        filmExist(film.getId());
         filmStorage.save(film);
     }
 
@@ -67,11 +63,5 @@ public class FilmService {
             top.add(films.get(i));
         }
         return top;
-    }
-
-    public void filmExist(int id) {
-        if (filmStorage.get(id) == null) {
-            throw new FilmNotFoundException("Film does not exist");
-        }
     }
 }

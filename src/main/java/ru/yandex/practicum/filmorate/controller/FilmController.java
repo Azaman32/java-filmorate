@@ -13,11 +13,12 @@ import java.util.List;
 @Slf4j
 public class FilmController {
     private final FilmService filmService;
-    private final FilmValidator validationFilms = new FilmValidator();
+    private final FilmValidator filmValidator;
 
     @Autowired
-    public FilmController(FilmService filmService) {
+    public FilmController(FilmService filmService,FilmValidator filmValidator) {
         this.filmService = filmService;
+        this.filmValidator = filmValidator;
     }
 
     @GetMapping("/films")
@@ -28,9 +29,6 @@ public class FilmController {
 
     @GetMapping("/films/{id}")
     public Film getFilm(@PathVariable int id) {
-        if (id < 0) {
-            throw new UserNotFoundException("Invalid id");
-        }
         return filmService.getFilm(id);
     }
 
@@ -41,7 +39,7 @@ public class FilmController {
 
     @PostMapping("/films")
     public Film create(@RequestBody Film film) {
-        validationFilms.validation(film);
+        filmValidator.validation(film);
         filmService.saveFilm(film);
         log.info("POST /films: создан фильм с id {}", film.getId());
         return film;
@@ -49,7 +47,7 @@ public class FilmController {
 
     @PutMapping("/films")
     public Film update(@RequestBody Film film) {
-        validationFilms.validation(film);
+        filmValidator.validation(film);
         filmService.updateFilm(film);
         log.info("Put /films: обновлен фильм с id {}", film.getId());
         return film;
