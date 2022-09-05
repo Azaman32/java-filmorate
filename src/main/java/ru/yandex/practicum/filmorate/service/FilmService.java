@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.controller.FilmIdGenerator;
-import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
@@ -18,7 +17,7 @@ public class FilmService {
     private final FilmIdGenerator filmIdGenerator;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage, UserService userService,FilmIdGenerator filmIdGenerator) {
+    public FilmService(FilmStorage filmStorage, UserService userService, FilmIdGenerator filmIdGenerator) {
         this.filmStorage = filmStorage;
         this.userService = userService;
         this.filmIdGenerator = filmIdGenerator;

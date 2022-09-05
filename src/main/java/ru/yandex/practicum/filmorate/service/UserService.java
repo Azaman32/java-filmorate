@@ -16,7 +16,7 @@ public class UserService {
     private final UserIdGenerator userIdGenerator;
 
     @Autowired
-    public UserService(UserStorage inMemoryUserStorage,UserIdGenerator userIdGenerator) {
+    public UserService(UserStorage inMemoryUserStorage, UserIdGenerator userIdGenerator) {
         this.userStorage = inMemoryUserStorage;
         this.userIdGenerator = userIdGenerator;
     }
